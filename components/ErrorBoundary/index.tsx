@@ -1,4 +1,7 @@
-import React, { ErrorInfo } from "react"
+import React, { ErrorInfo } from "react";
+import { Player, Controls } from '@lottiefiles/react-lottie-player';
+import { Box, Button } from "@mui/material";
+
 
 type ErrorBoundaryProps = {
     children: React.ReactNode;
@@ -30,19 +33,19 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
             // You can render any custom fallback UI
             return (
                 <div>
-                    <h2>Oops, there is an error!</h2>
-                    <button
-                        type="button"
-                        onClick={() => this.setState({ hasError: false })}
+                    <Player
+                        loop
+                        autoplay
+                        src="https://assets1.lottiefiles.com/packages/lf20_q4h79bkv.json"
+                        style={{ width: '50vw' }}
                     >
-                        Try again?
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => location.href = '/'}
-                    >
-                        back
-                    </button>
+                        <Controls visible={false} buttons={['play', 'repeat', 'frame', 'debug']} />
+                    </Player>
+                    <Box component='h2' textAlign='center'>Oops, there is an error!</Box>
+
+                    <Box textAlign='center' >
+                        <Button variant="contained" onClick={() => location.href = '/'}>回到首页</Button>
+                    </Box>
                 </div>
             )
         }
