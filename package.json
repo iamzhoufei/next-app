@@ -9,6 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@babel/core": "^7.0.0",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@lottiefiles/react-lottie-player": "^3.4.7",
+    "@mui/icons-material": "^5.10.9",
+    "@mui/material": "^5.10.11",
     "next": "13.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
