@@ -5,7 +5,7 @@ import styles from './index.module.scss'
 
 export default function DetailPage() {
   useEffect(() => {
-    // throw new Error('error')
+    throw new Error('error')
   }, [])
   return (
     <div className={styles.container}>
