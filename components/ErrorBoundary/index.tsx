@@ -9,6 +9,7 @@ type ErrorBoundaryProps = {
 
 type ErrorBoundaryState = {
     hasError: boolean;
+    showOperation: boolean;
 }
 
 class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
@@ -16,7 +17,10 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
         super(props)
 
         // Define a state variable to track whether is an error or not
-        this.state = { hasError: false }
+        this.state = {
+            hasError: false,
+            showOperation: false
+        }
     }
     static getDerivedStateFromError(error: Error) {
         // Update state so the next render will show the fallback UI
@@ -38,14 +42,26 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
                         autoplay
                         src="https://assets1.lottiefiles.com/packages/lf20_q4h79bkv.json"
                         style={{ width: '50vw' }}
+                        onEvent={event => {
+                            if (event === 'load') {
+                                this.setState({
+                                    showOperation: true,
+                                })
+                            }
+                        }}
                     >
                         <Controls visible={false} buttons={['play', 'repeat', 'frame', 'debug']} />
                     </Player>
-                    <Box component='h2' textAlign='center'>Oops, there is an error!</Box>
 
-                    <Box textAlign='center' >
-                        <Button variant="contained" onClick={() => location.href = '/'}>回到首页</Button>
-                    </Box>
+                    {
+                        this.state.showOperation ? <>
+                            <Box component='h2' textAlign='center'>Oops, there is an error!</Box>
+                            <Box textAlign='center' >
+                                <Button variant="contained" onClick={() => location.href = '/'}>回到首页</Button>
+                            </Box>
+                        </> : null
+                    }
+                    
                 </div>
             )
         }
