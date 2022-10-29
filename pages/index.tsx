@@ -1,11 +1,11 @@
-import { Button, TextField } from '@mui/material'
-import { SvgGoogle, SvgLock } from '../components/icons'
-import Head from 'next/head'
-import Image from 'next/image'
+// import { SvgGoogle, SvgLock } from '../components/icons'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import styles from './index.module.scss'
 import InfoCardComponent from '../components/InfoCard'
+import { AppContext } from 'next/app'
+import { Button, Tabs, Form, Input } from 'antd'
+import { SvgSnowMan } from '../components/icons'
 
 type TCard = {
   id: string;
@@ -14,9 +14,28 @@ type TCard = {
   weather: string;
 }
 
+const { Search } = Input;
+
 export default function Home() {
 
+  const tabs = [
+    {
+      label: `Google`,
+      key: 'Google',
+    },
+    {
+      label: `BaiDu`,
+      key: 'BaiDu',
+    },
+    {
+      label: `ZhiHu`,
+      key: 'ZhiHu',
+    },
+  ];
+
+  const [form] = Form.useForm();
   const [cards, setCards] = useState<TCard[]>([]);
+  const [activeTab, setActiveTab] = useState('Google')
 
   useEffect(() => {
     setCards([
@@ -35,32 +54,60 @@ export default function Home() {
     ])
   }, [])
 
+  function onFinish(values: any) {
+    console.log(values);
+  };
+
+  function onReset() {
+    form.resetFields();
+  };
+
+  function handleChangeTab(key: string) {
+    setActiveTab(key)
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.left}>
           <div className={styles.cards}>
-            <InfoCardComponent />
+            <InfoCardComponent id='' weather='' time='' />
             {/* <SvgLock /> */}
-            <InfoCardComponent />
+            <InfoCardComponent id='' weather='' time='' />
           </div>
-        
-          <div className={ styles.utils}></div>
+
+          <div className={styles.utils}></div>
         </div>
         <div className={styles.right}>
-          <TextField
-            fullWidth
-            label=""
-            placeholder={`Search Google`}
-            InputProps={{
-              endAdornment: <SvgGoogle style={{ fontSize: '20px' }} />,
-            }}
+
+          <SvgSnowMan style={{fontSize: '20px'}} />
+          <Tabs
+            defaultActiveKey={activeTab}
+            onChange={handleChangeTab}
+            items={tabs.map(item => ({
+              ...item,
+              children: (
+                <Form form={form} name="control-hooks" onFinish={onFinish}>
+                  <Form.Item name="search" label="">
+                    <Search
+                      loading
+                      size="large"
+                      placeholder={`search in ${activeTab}`}
+                      enterButton={(
+                        <Button size='large' type="primary" htmlType="submit">
+                          {activeTab === 'Google' ? 'Google it' : `search with ${activeTab}`}
+                        </Button>
+                      )}
+                    />
+                  </Form.Item>
+                </Form>
+              )
+            }))}
           />
 
-
-          <Link href='/detail'>
-            <Button variant="contained">Hello World</Button>
-          </Link>
+          {/* <Link href='/detail'>
+            <Button>to /detail</Button>
+          </Link> */}
         </div>
       </div>
       <div className={styles.footer}>
@@ -68,4 +115,11 @@ export default function Home() {
       </div>
     </div>
   )
+}
+
+export async function getServerSideProps(context: AppContext) {
+
+  return {
+    props: {}, // will be passed to the page component as props
+  }
 }
