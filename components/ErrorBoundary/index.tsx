@@ -1,6 +1,7 @@
 import React, { ErrorInfo } from "react";
+import { Button } from "antd";
+
 import { Player, Controls } from '@lottiefiles/react-lottie-player';
-import { Box, Button } from "@mui/material";
 
 
 type ErrorBoundaryProps = {
@@ -55,10 +56,9 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
 
                     {
                         this.state.showOperation ? <>
-                            <Box component='h2' textAlign='center'>Oops, there is an error!</Box>
-                            <Box textAlign='center' >
-                                <Button variant="contained" onClick={() => location.href = '/'}>回到首页</Button>
-                            </Box>
+                            <h2>Oops, there is an error!</h2>
+                            <Button onClick={() => location.href = '/'}>回到首页</Button>
+
                         </> : null
                     }
                     
