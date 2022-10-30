@@ -19,6 +19,14 @@ export default function Home() {
       key: 'Google',
     },
     {
+      label: `GitHub`,
+      key: 'GitHub',
+    },
+    {
+      label: `MDN`,
+      key: 'MDN',
+    },
+    {
       label: `百度`,
       key: 'BaiDu',
     },
@@ -48,13 +56,26 @@ export default function Home() {
   }, [])
 
   function onFinish(values: any) {
-    console.log(values);
-    const targetLink = `https://www.google.com/search?q=${values?.search || ''}`;
-    // if (self) {
-    //   window.location.href = targetLink;
-    // } else {
-    //   window.open(targetLink);
-    // }
+    let targetLink = '';
+    switch (activeTab) {
+      case 'Google':
+        targetLink = `https://www.google.com/search?q=${values?.search || ''}`
+        break;
+      case 'MDN':
+        targetLink = `https://developer.mozilla.org/zh-CN/search?q=${values?.search || ''}`
+        break;
+      case 'GitHub':
+        targetLink = `https://github.com/search?q=${values?.search || ''}`
+        break;
+      case 'BaiDu':
+        targetLink = `https://www.baidu.com/s?wd=${values?.search || ''}`
+        break;
+      case 'ZhiHu':
+        targetLink = `https://www.zhihu.com/search?type=content&q=${values?.search || ''}`
+        break;
+      default:
+        break;
+    }
     window.location.href = targetLink;
   };
 
@@ -91,6 +112,7 @@ export default function Home() {
                       <Form.Item name="search" label="">
                         <Search
                           loading
+                          autoFocus
                           allowClear
                           size="large"
                           placeholder={`search in ${activeTab}`}
