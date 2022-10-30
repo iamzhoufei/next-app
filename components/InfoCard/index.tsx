@@ -1,28 +1,46 @@
 import { Card, Avatar } from 'antd';
 import { useEffect, useState } from 'react';
+import { dayjs, api } from '../../tools';
 import styles from './index.module.scss';
 
 const { Meta } = Card;
 
-type TInfoCard = {
+export type TInfoCard = {
     id: string;
+    title: string;
     weather: string;
-    time: string;
+    // time: string;
 };
 
-export default function InfoCardComponent(props: TInfoCard) {
+export default function InfoCardComponent({ id, title }: TInfoCard) {
+    const [loading, setLoading] = useState(false);
+    const [time, setTime] = useState<any>(null);
 
-    const [loading, setLoading] = useState(!props.id);
+    // useEffect(() => {
+    //     if (props.id) setLoading(false)
+    // }, [props.id])
+
+    async function handleGetWeather() {
+        const [err, result] = await api.user.getWeather({ lat: '53.96', lon: '-1.07' })
+        console.log(`===========result==============`);
+        console.log(result);
+    }
 
     useEffect(() => {
-        if (props.id) setLoading(false)
-    }, [props.id])
+        setTimeout(() => {
+            setTime(new Date())
+        }, 1000)
+    }, [time])
 
-    return <Card style={{ width: 300, marginTop: 16 }} loading={loading}>
+    useEffect(() => {
+        handleGetWeather()
+    }, [])
+
+    return <Card className={styles.card} loading={loading}>
         <Meta
             avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-            title="Card title"
-            description="This is the description"
+            title={title}
+            description={dayjs(time)?.tz(id === 'bear' ? 'Asia/Shanghai' : "Europe/London").format('YYYY-MM-DD HH:mm:ss')}
         />
     </Card>
 }
