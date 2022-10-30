@@ -14,6 +14,7 @@ specifiers:
   antd: ^4.23.6
   axios: ^1.1.3
   babel-loader: ^9.0.0
+  dayjs: ^1.11.6
   eslint: 8.26.0
   eslint-config-next: 13.0.0
   next: 13.0.0
@@ -30,6 +31,7 @@ dependencies:
   ahooks: 3.7.2_react@18.2.0
   antd: 4.23.6_biqbaboplfbrettd7655fr4n2y
   axios: 1.1.3
+  dayjs: 1.11.6
   next: 13.0.0_mk5yftg2men2cn3ayx4t7ddtvy
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
