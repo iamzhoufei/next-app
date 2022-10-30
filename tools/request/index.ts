@@ -1,6 +1,6 @@
 
-import { userApi } from "./path/user";
+import { user } from "./path/user";
 
 export const api = {
-    ...userApi,
+    user,
 };

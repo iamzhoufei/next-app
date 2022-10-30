@@ -1,4 +1,4 @@
-import { message } from "antd";
+// import { message } from "antd";
 
 export const handleChangeRequestHeader = (config: any) => {
     config["xxxx"] = "xxx";
@@ -6,7 +6,7 @@ export const handleChangeRequestHeader = (config: any) => {
 };
 
 export const handleConfigureAuth = (config: any) => {
-    config.headers["token"] = localStorage.getItem("token") || "";
+    // config.headers["token"] = localStorage.getItem("token") || "";
     return config;
 };
 
@@ -26,11 +26,11 @@ export const handleNetworkError = (errStatus?: number): void => {
         "505": "http版本不支持该请求",
     };
     if (errStatus) {
-        message.error(networkErrMap[errStatus] ?? `其他连接错误 --${errStatus}`);
+        console.error(networkErrMap[errStatus] ?? `其他连接错误 --${errStatus}`);
         return;
     }
 
-    message.error("无法连接到服务器！");
+    console.error("无法连接到服务器！");
 };
 
 export const handleAuthError = (errno: string): boolean => {
@@ -46,7 +46,7 @@ export const handleAuthError = (errno: string): boolean => {
     };
 
     if (authErrMap.hasOwnProperty(errno)) {
-        message.error(authErrMap[errno]);
+        console.error(authErrMap[errno]);
         // 授权错误，登出账户
         // logout();
         return false;
@@ -56,8 +56,9 @@ export const handleAuthError = (errno: string): boolean => {
 };
 
 export const handleGeneralError = (errno: string, errmsg: string): boolean => {
-    if (errno !== "0") {
-        message.error(errmsg);
+    if (errno && errno !== "0") {
+        
+        console.error(`errmsg: ${errmsg}`);
         return false;
     }
 

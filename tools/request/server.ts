@@ -20,12 +20,14 @@ interface Response<T> {
     data: T;
 }
 
+// 请求拦截
 axios.interceptors.request.use((config) => {
     config = handleChangeRequestHeader(config);
     config = handleConfigureAuth(config);
     return config;
 });
 
+// 响应拦截
 axios.interceptors.response.use(
     (response) => {
         if (response.status !== 200) return Promise.reject(response.data);
@@ -34,8 +36,8 @@ axios.interceptors.response.use(
         return response;
     },
     (err) => {
-        handleNetworkError(err.response.status);
-        Promise.reject(err.response);
+        handleNetworkError(err?.response?.status);
+        Promise.reject(err?.response);
     }
 );
 

@@ -3,3 +3,8 @@ export type TUserInfo = {
     name: string;
     avatar: string;
 }
+
+export type TWeatherParams = {
+    lat: string;
+    lon: string;
+}
