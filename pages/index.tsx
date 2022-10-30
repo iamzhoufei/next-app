@@ -1,18 +1,13 @@
-// import { SvgGoogle, SvgLock } from '../components/icons'
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import styles from './index.module.scss'
-import InfoCardComponent from '../components/InfoCard'
 import { AppContext } from 'next/app'
-import { Button, Tabs, Form, Input } from 'antd'
-import { SvgSnowMan } from '../components/icons'
+import { Button, Tabs, Form, Input, Col, Row } from 'antd'
+import { Player, Controls } from '@lottiefiles/react-lottie-player'
+import dayjs from '../tools/dayjs'
+import InfoCardComponent, { TInfoCard } from '../components/InfoCard'
 
-type TCard = {
-  id: string;
-  backgroundImage: string;
-  time: string;
-  weather: string;
-}
+import bearJson from '../public/lottie/bear.json'
+import styles from './index.module.scss'
+import { api } from '../tools'
 
 const { Search } = Input;
 
@@ -24,31 +19,29 @@ export default function Home() {
       key: 'Google',
     },
     {
-      label: `BaiDu`,
+      label: `百度`,
       key: 'BaiDu',
     },
     {
-      label: `ZhiHu`,
+      label: `知乎`,
       key: 'ZhiHu',
     },
   ];
 
   const [form] = Form.useForm();
-  const [cards, setCards] = useState<TCard[]>([]);
+  const [cards, setCards] = useState<TInfoCard[]>([]);
   const [activeTab, setActiveTab] = useState('Google')
 
   useEffect(() => {
     setCards([
       {
-        id: 'bear',
-        backgroundImage: '',
-        time: '',
+        id: 'rabbit',
+        title: 'Rabbit, York, UK',
         weather: ''
       },
       {
-        id: 'rabbit',
-        backgroundImage: '',
-        time: '',
+        id: 'bear',
+        title: 'Bear, HangZhou, CN',
         weather: ''
       }
     ])
@@ -56,6 +49,13 @@ export default function Home() {
 
   function onFinish(values: any) {
     console.log(values);
+    const targetLink = `https://www.google.com/search?q=${values?.search || ''}`;
+    // if (self) {
+    //   window.location.href = targetLink;
+    // } else {
+    //   window.open(targetLink);
+    // }
+    window.location.href = targetLink;
   };
 
   function onReset() {
@@ -69,57 +69,58 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <div className={styles.left}>
-          <div className={styles.cards}>
-            <InfoCardComponent id='' weather='' time='' />
-            {/* <SvgLock /> */}
-            <InfoCardComponent id='' weather='' time='' />
-          </div>
+        <Row justify="center">
+          <Col span={12}>
+            <div className={styles.center}>
+              <Player
+                loop
+                autoplay
+                speed={0.5}
+                src={bearJson}
+                style={{ width: '200px' }}
+              >
+                <Controls visible={false} buttons={['play', 'repeat', 'frame', 'debug']} />
+              </Player>
+              <Tabs
+                defaultActiveKey={activeTab}
+                onChange={handleChangeTab}
+                items={tabs.map(item => ({
+                  ...item,
+                  children: (
+                    <Form form={form} name="search_form" onFinish={onFinish}>
+                      <Form.Item name="search" label="">
+                        <Search
+                          loading
+                          allowClear
+                          size="large"
+                          placeholder={`search in ${activeTab}`}
+                          enterButton={(
+                            <Button size='large' type="primary" htmlType="submit">
+                              {activeTab === 'Google' ? 'Google it' : `在${tabs.filter(item => item.key === activeTab)[0].label}中搜索`}
+                            </Button>
+                          )}
+                        />
+                      </Form.Item>
+                    </Form>
+                  )
+                }))}
+              />
+            </div>
+          </Col>
+        </Row>
 
-          <div className={styles.utils}></div>
-        </div>
-        <div className={styles.right}>
-
-          <SvgSnowMan style={{fontSize: '20px'}} />
-          <Tabs
-            defaultActiveKey={activeTab}
-            onChange={handleChangeTab}
-            items={tabs.map(item => ({
-              ...item,
-              children: (
-                <Form form={form} name="control-hooks" onFinish={onFinish}>
-                  <Form.Item name="search" label="">
-                    <Search
-                      loading
-                      size="large"
-                      placeholder={`search in ${activeTab}`}
-                      enterButton={(
-                        <Button size='large' type="primary" htmlType="submit">
-                          {activeTab === 'Google' ? 'Google it' : `search with ${activeTab}`}
-                        </Button>
-                      )}
-                    />
-                  </Form.Item>
-                </Form>
-              )
-            }))}
-          />
-
-          {/* <Link href='/detail'>
-            <Button>to /detail</Button>
-          </Link> */}
-        </div>
+        <Row justify="center">
+          <Col flex='1' span={6}>
+            <InfoCardComponent {...cards[0]} />
+          </Col>
+          <Col flex='1' span={6}>
+            <InfoCardComponent {...cards[1]} />
+          </Col>
+        </Row>
       </div>
       <div className={styles.footer}>
 
       </div>
     </div>
   )
-}
-
-export async function getServerSideProps(context: AppContext) {
-
-  return {
-    props: {}, // will be passed to the page component as props
-  }
 }
