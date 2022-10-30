@@ -2,7 +2,6 @@
 import { Get } from "../../server";
 import { TUserInfo, TWeatherParams } from "./types";
 
-const weather_api_key = '2429d6c34e15ea209483243e93f393da';
 
 export interface Response<T> {
     errNo: string;
@@ -18,7 +17,7 @@ export function getUserInfo<T = TUserInfo>(id: string): ApiResponse<T> {
 
 
 export function getWeather<T = TWeatherParams>({ lat, lon }: TWeatherParams): ApiResponse<T> {
-    return Get<T>(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${weather_api_key}`);
+    return Get<T>(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.WEATHER_API_KEY}`);
 }
 
 export const user = {
