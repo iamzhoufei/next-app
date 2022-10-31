@@ -131,14 +131,14 @@ export default function Home() {
           </Col>
         </Row>
 
-        <Row justify="center">
+        {/* <Row justify="center">
           <Col flex='1' span={6}>
             <InfoCardComponent {...cards[0]} />
           </Col>
           <Col flex='1' span={6}>
             <InfoCardComponent {...cards[1]} />
           </Col>
-        </Row>
+        </Row> */}
       </div>
       <div className={styles.footer}>
 
