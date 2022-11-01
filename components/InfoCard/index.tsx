@@ -1,4 +1,4 @@
-import { Card, Avatar } from 'antd';
+import { Card } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { dayjs, api } from '../../tools';
 import { TWeatherResult } from '../../tools/request/path/user/types';
