@@ -56,7 +56,7 @@ export const Get = <T,>(
                 } else {
                     res = result.data as Response<T>;
                 }
-                resolve([null, res as Response<T>]);
+                resolve([null, {data: res} as Response<T>]);
             })
             .catch((err) => {
                 resolve([err, undefined]);

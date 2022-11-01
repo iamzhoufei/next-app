@@ -15,9 +15,8 @@ export function getUserInfo<T = TUserInfo>(id: string): ApiResponse<T> {
     return Get<T>("/user/info", { id });
 }
 
-
 export function getWeather<T = TWeatherParams>({ lat, lon }: TWeatherParams): ApiResponse<T> {
-    return Get<T>(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.WEATHER_API_KEY}`);
+    return Get<T>(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&lang=zh_cn&appid=${process.env.WEATHER_API_KEY}`);
 }
 
 export const user = {
