@@ -16,8 +16,10 @@
 // }
 
 import Icon from '@ant-design/icons';
-import SnowMan from './23.svg'; // path to your '*.svg' file.
+import BearSvg from './bear.svg'; // path to your '*.svg' file.
+// import RabbitSvg from './rabbit.svg';
 // in create-react-app:
 // import { ReactComponent as MessageSvg } from 'path/to/message.svg';
 
-export const SvgSnowMan = (props: any) => <Icon {...props} component={SnowMan} /> 
+export const BearIcon = (props: any) => <Icon {...props} component={BearSvg} /> 
+// export const RabbitIcon = (props: any) => <Icon {...props} component={RabbitSvg} />
