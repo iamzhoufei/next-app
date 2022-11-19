@@ -6,7 +6,8 @@
     "dev": "next dev -p 4000",
     "build": "next build",
     "start": "next start -p 4000",
-    "lint": "next lint"
+    "lint": "next lint",
+    "commit": "git-cz"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
@@ -33,6 +34,7 @@
     "babel-loader": "^9.0.0",
     "eslint": "8.26.0",
     "eslint-config-next": "13.0.0",
+    "git-cz": "^4.9.0",
     "sass": "^1.55.0",
     "typescript": "4.8.4",
     "yx-tiny": "^0.0.10"
