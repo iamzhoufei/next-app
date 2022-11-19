@@ -5,6 +5,8 @@ import InfoCardComponent from '../components/InfoCard'
 
 import bearJson from '../public/lottie/bear.json'
 import styles from './index.module.scss'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../store/types/store'
 
 const { Search } = Input;
 
@@ -36,6 +38,13 @@ export default function Home() {
   const [form] = Form.useForm();
   const [activeTab, setActiveTab] = useState('Google')
 
+  const dispatch = useDispatch();
+  const { isInfoCardShow } = useSelector((state: RootState) => {
+    return state.global.setting;
+  });
+
+  console.log(`isInfoCardShow: ${isInfoCardShow}`)
+
   function onFinish(values: any) {
     let targetLink = '';
     switch (activeTab) {
@@ -58,10 +67,6 @@ export default function Home() {
         break;
     }
     window.location.href = targetLink;
-  };
-
-  function onReset() {
-    form.resetFields();
   };
 
   function handleChangeTab(key: string) {
@@ -112,17 +117,18 @@ export default function Home() {
           </Col>
         </Row>
 
-        {/* <Row justify="center">
-          <Col flex='1' span={6}>
-            <InfoCardComponent id='rabbit' />
-          </Col>
-          <Col flex='1' span={6}>
-            <InfoCardComponent id='bear' />
-          </Col>
-        </Row> */}
-      </div>
-      <div className={styles.footer}>
-
+        {
+          isInfoCardShow
+            ? <Row justify="center">
+              <Col flex='1' span={6}>
+                <InfoCardComponent id='rabbit' />
+              </Col>
+              <Col flex='1' span={6}>
+                <InfoCardComponent id='bear' />
+              </Col>
+            </Row>
+            : null
+        }
       </div>
     </div>
   )
