@@ -84,4 +84,4 @@ export default function InfoCardComponent({ id }: TInfoCardProps) {
             {weatherInfo?.weather?.[0]?.description}
         </div>
     </Card>
-}
+} 
